@@ -221,10 +221,10 @@ def main():
         )
 
     if data_args.block_size <= 0:
-        data_args.block_size = tokenizer.max_len
+        data_args.block_size = tokenizer.model_max_length
         # Our input block size will be the max possible for the model
     else:
-        data_args.block_size = min(data_args.block_size, tokenizer.max_len)
+        data_args.block_size = min(data_args.block_size, tokenizer.model_max_length)
 
     # Get datasets
 
@@ -242,7 +242,7 @@ def main():
         data_collator=data_collator,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        prediction_loss_only=True,
+        prediction_loss_only=True
     )
 
     # Training
@@ -288,4 +288,5 @@ def _mp_fn(index):
 
 
 if __name__ == "__main__":
+#python run_language_model_bert.py --output_dir = output --model_type = bert --model_name_or_path = bert-base-chinese --do_train --train_data_file = train.txt --do_eval --eval_data_file = eval.txt --mlm --per_device_train_batch_size=2
     main()
